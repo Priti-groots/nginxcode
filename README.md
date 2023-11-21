@@ -1,2 +1,2 @@
 # nginxcode
-ghghhjhjhjjjjmj
+Nginx configuration
