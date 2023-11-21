@@ -1,0 +1,31 @@
+#80 cnfigurataionn on private server and proxy pass from a public server.
+server {
+listen 80;
+server_name phpmyadmin-docs.groots.in; # Edit this to your domain name
+client_max_body_size 100M;
+
+  root /var/www/html/phpmyadmin/;
+  index index.php index.html index.htm index.nginx-debian.html;
+
+        access_log            /var/log/nginx/phpmyadmin-docs.groots.in/access.log;
+        error_log            /var/log/nginx/phpmyadmin-docs.groots.in/error.log;
+
+  location / {
+    try_files $uri $uri/ /index.php;
+  }
+
+  location ~ ^/(doc|sql|setup)/ {
+    deny all;
+  }
+
+location ~ \.php$ {
+      include /etc/nginx/fastcgi_params;
+      fastcgi_pass 127.0.0.1:9000;
+      fastcgi_index index.php;
+      fastcgi_param SCRIPT_FILENAME /var/www/html/phpmyadmin$fastcgi_script_name;
+   }
+
+location ~ /\.ht {
+    deny all;
+  }
+}
